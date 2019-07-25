@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/JulieDavison/Liribot/issues"
   },
-  "homepage": "https://github.com/JulieDavison/Liribot#readme"
+  "homepage": "https://github.com/JulieDavison/Liribot#readme",
+  "dependencies": {
+    "node-spotify-api": "^1.1.1"
+  }
 }
