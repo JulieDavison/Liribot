@@ -48,10 +48,10 @@ userCommand(userInput, userQuery);
 
 // Methods
 function spotifyThisSong(userQuery) {
-    console.log(`\n--- \nSearching for...: ${userQuery}`);
+    console.log(`\n--- \nSearching ...:`);
 
     if (!userQuery) {
-        userQuery = "1999";
+        userQuery = "Space Oddity";
     }
     spotify.search({
             type: 'track',
@@ -59,11 +59,13 @@ function spotifyThisSong(userQuery) {
             limit: 1
         })
         .then(function (response) {
-            console.log(response.tracks.items[0]);
-            // console.log(response); artist 
-            // console.log(response); song name 
-            // console.log(response); preview of song 
-            // console.log(response); album that song is from
+            console.log("\n----------------------\n");
+            // console.log(response.tracks.items[0]);
+            console.log("Artist Name: " + response.tracks.items[0].artists[0].name);  
+            console.log("Song Name: " + response.tracks.items[0].name);
+            console.log("Preview Link: " + response.tracks.items[0].preview_url);
+            console.log("Album: " + response.tracks.items[0].album.name);
+            console.log("\n----------------------\n");
         })
         .catch(function (err) {
             console.log(err);
@@ -76,37 +78,32 @@ function spotifyThisSong(userQuery) {
 // OMBD
 
 function movieThis(movieName){
+    console.log(`\n--- \nSearching ...:`);
 
     if (!movieName) {
-        movieName = "Mr. Nice Guy";
+        movieName = "Taken";
     }
 
 // Then run a request with axios to the OMDB API with the movie specified
 var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=" + process.env.OMDB;
+console.log(queryUrl);
 
-axios.get(queryUrl).then(
-  function(response) {
-    console.log("Release Year: ", response.data);
+axios.get(queryUrl).then(function(response) { 
+    console.log("\n----------------------\n"); 
+    // console.log("Response: ", response.data);
+    console.log("Movie Title: " + response.data.Title);
+    console.log("Date Released: ", response.data.Released);
+    console.log("Movie Rating: ", response.data.Rated);    
+    console.log("IMDB Rating: ", response.data.imdbRating); 
+    console.log("Rotten Tomatoes Rating: ", response.data.Ratings[1].Value); 
+    console.log("Country Where Produced: ", response.data.Country);
+    console.log("Language: ", response.data.Language);
+    console.log("Plot: ", response.data.Plot);
+    console.log("Actors: ", response.data.Actors);
+    console.log("\n----------------------\n");
   })
   .catch(function(error) {
-    if (error.response) {
-      // The request was made and the server responded with a status code
-      // that falls out of the range of 2xx
-      console.log("---------------Data---------------");
-      console.log(error.response.data);
-      console.log("---------------Status---------------");
-      console.log(error.response.status);
-      console.log("---------------Status---------------");
-      console.log(error.response.headers);
-    } else if (error.request) {
-      // The request was made but no response was received
-      // `error.request` is an object that comes back with details pertaining to the error that occurred.
-      console.log(error.request);
-    } else {
-      // Something happened in setting up the request that triggered an Error
-      console.log("Error", error.message);
-    }
-    console.log(error.config);
+    console.error(error);
   });
 }
 
